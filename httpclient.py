@@ -33,11 +33,33 @@ class HTTPRequest(object):
         self.body = body
 
 class HTTPClient(object):
-    #def get_host_port(self,url):
+    def get_host_port(self,url):
+        print ("at get_host_port function --> url passed: %s" % url)
+        
+        urlInfo = url.split(":")
+        portInfo = urlInfo[len(urlInfo)-1].split("/")
+        
+        host=""
+        for info in urlInfo[:-2]:
+            host += info + ":"
+        
+        host += urlInfo[-2]
+        port = int(portInfo[0])
+        
+        return host, port
 
     def connect(self, host, port):
+        try:
+            #create an AF_INET, STREAM socket (TCP)
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        except socket.error:
+            print ('Failed to create socket. Error code: ' + str(msg[0]) + ' , Error message : ' + msg[1])
+            sys.exit();
+
+        #Connect to remote server
+        s.connect((host , port))
         # use sockets!
-        return None
+        return s
 
     def get_code(self, data):
         return None
@@ -61,8 +83,19 @@ class HTTPClient(object):
         return str(buffer)
 
     def GET(self, url, args=None):
+        host, port = self.get_host_port(url)
+        
+        con_socket = self.connect(host, port)
+        
+        conn, addr = con_socket.accept()
+
+        data = self.recvall(con_socket)
+        
+        print("data received? %s \n" % data)
+        
         code = 500
         body = ""
+        print body
         return HTTPRequest(code, body)
 
     def POST(self, url, args=None):
