@@ -17,3 +17,10 @@ examples thus some of the code is Copyright © 2001-2013 Python
 Software Foundation; All Rights Reserved under the PSF license (GPL
 compatible) http://docs.python.org/2/library/socketserver.html
 
+External Resources used:
+=======================
+For regex used in httpclient.py at line 37, modified the regex given
+as an answer in:
+http://stackoverflow.com/questions/9530950/parsing-hostname-and-port-from-string-or-url
+
+
