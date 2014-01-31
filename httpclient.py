@@ -56,7 +56,7 @@ class HTTPClient(object):
             print ('Failed to create socket. Error code: ' + str(msg[0]) + ' , Error message : ' + msg[1])
             sys.exit();
 
-        #Connect to server
+        #Connect to server        
         soc.connect((host , port))
 
         return soc
